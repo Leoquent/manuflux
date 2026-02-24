@@ -12,7 +12,10 @@ interface HeroProps {
 
 export default function Hero({ onLoaded }: HeroProps) {
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+    <section className="relative min-h-[100dvh] flex items-center justify-center pt-24 pb-20 overflow-hidden">
+      {/* Bottom fade out to black */}
+      <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none" />
+
       {/* Background Elements - Spline 3D Scene */}
       <div className="absolute inset-0 z-0">
         {/* Mobile-optimized radial gradients instead of expensive blur effects */}

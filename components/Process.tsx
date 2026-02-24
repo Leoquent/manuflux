@@ -78,9 +78,9 @@ export default function Process() {
 
   return (
     <section ref={containerRef} id="process" className="relative h-[500vh] bg-black">
-      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+      <div className="sticky top-0 h-[100dvh] flex flex-col justify-center overflow-hidden">
         <div className="max-w-7xl mx-auto px-6 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
             {/* Left Side: Static Header */}
             <div className="py-12">
               <motion.span initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} className="text-red-500 font-semibold uppercase tracking-widest text-sm">

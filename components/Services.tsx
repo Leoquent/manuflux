@@ -79,8 +79,8 @@ export default function Services() {
           {services.map((service, index) => (
             <motion.div
               key={service.title}
-              initial={{ opacity: 0, y: 40, scale: 0.9, rotateX: 10 }}
-              whileInView={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.7, delay: (index % 3) * 0.1, ease: [0.21, 0.47, 0.32, 0.98] }}
               whileHover={{ y: -10, transition: { duration: 0.4 } }}

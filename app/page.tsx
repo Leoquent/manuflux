@@ -12,12 +12,25 @@ import FAQ from '@/components/FAQ';
 import ContactCTA from '@/components/ContactCTA';
 import Footer from '@/components/Footer';
 import Chatbot from '@/components/Chatbot';
+import Preloader from '@/components/Preloader';
+import { useState, useEffect } from 'react';
 
 export default function Home() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Fallback: Falls Spline nach 3.5 Sekunden nicht geladen hat, Seite trotzdem anzeigen
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 3500);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <main className="relative">
+      <Preloader isLoading={isLoading} />
       <Navbar />
-      <Hero />
+      <Hero onLoaded={() => setIsLoading(false)} />
       <Mission />
 
       {/* Trust Section */}

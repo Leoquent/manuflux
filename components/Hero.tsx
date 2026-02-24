@@ -6,13 +6,18 @@ import Link from 'next/link';
 import { LiquidButton } from '@/components/ui/liquid-glass-button';
 import { SplineScene } from '@/components/ui/spline-scene';
 
-export default function Hero() {
+interface HeroProps {
+  onLoaded?: () => void;
+}
+
+export default function Hero({ onLoaded }: HeroProps) {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
       {/* Background Elements - Spline 3D Scene */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 -left-20 w-96 h-96 bg-red-600/20 rounded-full blur-[120px] mix-blend-screen" />
-        <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-red-900/10 rounded-full blur-[120px] mix-blend-screen" />
+        {/* Mobile-optimized radial gradients instead of expensive blur effects */}
+        <div className="absolute top-1/4 -left-20 w-[40rem] h-[40rem] bg-[radial-gradient(circle,rgba(220,38,38,0.15)_0%,transparent_60%)] -z-10" />
+        <div className="absolute bottom-1/4 -right-20 w-[40rem] h-[40rem] bg-[radial-gradient(circle,rgba(153,27,27,0.1)_0%,transparent_60%)] -z-10" />
         <div
           className="absolute inset-0 pointer-events-none sm:pointer-events-auto"
           style={{
@@ -23,6 +28,7 @@ export default function Hero() {
           <SplineScene
             scene="https://prod.spline.design/pB30VHJTW9pXUfet/scene.splinecode"
             className="w-full h-full"
+            onLoad={onLoaded}
           />
         </div>
       </div>
@@ -84,11 +90,39 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.5, duration: 1 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-white/30"
+        transition={{ delay: 2, duration: 1.5 }}
+        className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
       >
-        <span className="text-[10px] uppercase tracking-[0.3em]">Scroll</span>
-        <div className="w-[1px] h-12 bg-gradient-to-b from-red-600 to-transparent" />
+        <span className="text-[10px] uppercase tracking-[0.5em] font-light text-white/40">
+          Scroll
+        </span>
+        <div className="relative w-[1px] h-16 bg-white/5 overflow-hidden">
+          {/* Pulsing Base Line */}
+          <motion.div
+            animate={{
+              opacity: [0.2, 0.5, 0.2]
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "easeInOut"
+            }}
+            className="absolute inset-0 bg-red-600"
+          />
+          {/* Animated Flowing Gradient */}
+          <motion.div
+            animate={{
+              y: ["-100%", "100%"],
+              opacity: [0, 1, 0]
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeIn"
+            }}
+            className="absolute inset-0 bg-gradient-to-b from-transparent via-red-500 to-transparent"
+          />
+        </div>
       </motion.div>
     </section>
   );

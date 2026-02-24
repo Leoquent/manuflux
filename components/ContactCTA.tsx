@@ -51,11 +51,11 @@ export default function ContactCTA() {
               <h3 className="text-2xl font-bold mb-8 text-center">Jetzt Termin anfragen</h3>
               <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <input type="text" placeholder="Name" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-red-600 transition-colors" />
-                  <input type="text" placeholder="Betrieb" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-red-600 transition-colors" />
+                  <input type="text" placeholder="Name" suppressHydrationWarning className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-red-600 transition-colors" />
+                  <input type="text" placeholder="Betrieb" suppressHydrationWarning className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-red-600 transition-colors" />
                 </div>
-                <input type="email" placeholder="E-Mail" className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-red-600 transition-colors" />
-                <textarea placeholder="Wie können wir helfen?" rows={4} className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-red-600 transition-colors resize-none" />
+                <input type="email" placeholder="E-Mail" suppressHydrationWarning className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-red-600 transition-colors" />
+                <textarea placeholder="Wie können wir helfen?" rows={4} suppressHydrationWarning className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-red-600 transition-colors resize-none" />
                 <LiquidButton variant="red" size="xl" className="w-full">
                   <span className="flex items-center justify-center gap-2 font-bold text-lg">
                     Anfrage senden

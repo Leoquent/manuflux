@@ -16,9 +16,13 @@ export default function CustomCursor() {
   useEffect(() => {
     // Check if device is a touch device to disable custom cursor
     if (window.matchMedia('(pointer: coarse)').matches) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsTouchDevice(true);
-      return;
     }
+  }, []);
+
+  useEffect(() => {
+    if (isTouchDevice) return;
 
     const moveCursor = (e: MouseEvent) => {
       mouseX.set(e.clientX);

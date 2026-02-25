@@ -15,7 +15,7 @@ const navLinks = [
   { name: 'FAQ', href: '#faq' },
 ];
 
-export default function Navbar() {
+export default function Navbar({ onOpenQuiz }: { onOpenQuiz?: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -28,7 +28,12 @@ export default function Navbar() {
   }, []);
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-1000 pointer-events-none ${scrolled ? 'bg-black/95 backdrop-blur-md border-b border-white/10 py-4' : 'bg-transparent py-6'}`}>
+    <motion.nav
+      initial={{ y: '-100%', opacity: 0 }}
+      animate={{ y: scrolled ? 0 : '-100%', opacity: scrolled ? 1 : 0 }}
+      transition={{ duration: 0.5, ease: 'easeOut' }}
+      className="fixed top-0 left-0 right-0 z-50 pointer-events-none bg-black/95 backdrop-blur-md border-b border-white/10 py-4"
+    >
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center pointer-events-auto">
         <Link href="/" className="flex items-center gap-2 group">
           <Logo size={40} />
@@ -45,10 +50,10 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-          <LiquidButton asChild variant="red" size="default">
-            <Link href="#contact" className="font-semibold">
-              Gespräch anfragen
-            </Link>
+          <LiquidButton variant="red" size="default" onClick={onOpenQuiz}>
+            <span className="font-semibold cursor-pointer">
+              Kostenloser Digital-Check
+            </span>
           </LiquidButton>
         </div>
 
@@ -72,14 +77,14 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
-            <LiquidButton asChild variant="red" size="xl">
-              <Link href="#contact" className="w-full text-center font-semibold" onClick={() => setIsOpen(false)}>
-                Gespräch anfragen
-              </Link>
+            <LiquidButton variant="red" size="xl" onClick={() => { setIsOpen(false); onOpenQuiz?.(); }}>
+              <span className="w-full text-center font-semibold cursor-pointer">
+                Kostenloser Digital-Check
+              </span>
             </LiquidButton>
           </motion.div>
         )}
       </AnimatePresence>
-    </nav>
+    </motion.nav>
   );
 }

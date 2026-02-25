@@ -6,29 +6,77 @@ import { MessageSquare, X, Send, Loader2 } from 'lucide-react';
 import { GoogleGenAI } from "@google/genai";
 
 const SYSTEM_INSTRUCTION = `
-You are the AI assistant for manuflux Studio, a digital agency specializing in solutions for the craft sector (Handwerk).
-Your goal is to answer basic customer inquiries and encourage them to book a free initial consultation.
+Du bist der KI-Beratungsassistent von manuflux Studio, einer Digitalagentur exklusiv für Handwerksbetriebe.
+Dein primäres Ziel ist die interaktive "Lead-Qualifizierung" im Chat (Conversational Lead Generation) und die direkte Terminvereinbarung für ein Gespräch.
 
-Key information about manuflux Studio:
-- Services: High-end Webdesign, Process Automation, E-mail sorting (invoices, applications), AI Chatbots, SEO, Social Media, Hosting, Maintenance, Review automation.
-- Target Audience: Craftsmen and craft businesses (Handwerksbetriebe).
-- Philosophy: We simplify the "annoying computer stuff" so craftsmen can focus on their actual work. We build websites that act as a hub for digital solutions.
-- Founders: Dominik and Taima.
-- Tone: Professional, helpful, direct, and empathetic to the needs of busy craftsmen.
-- Language: German (Deutsch).
+Ablauf des Gesprächs (Conversational Quiz):
+1. Wenn der Nutzer aus dem "Digital-Check" übergeben wurde, hast du bereits Kontext zu ihm. Zeige, dass du seine Situation kennst, ordne sie professionell ein und präsentiere pragmatische Lösungsansätze (z.B. KI-Mitarbeiter bei Telefongelingel). Mach das direkt in deiner allerersten Antwort auf seine initiale Nachricht oder Begrüßung.
+2. Wenn der Nutzer normal (ohne Quiz) reinschreibt, stellst du zu Beginn offene, einladende Fragen, um das Gewerk und den größten Schmerzpunkt (z.B. Zettelwirtschaft, Azubi-Mangel) herauszufinden.
+3. Direkte Lead-Generierung: Verweise NICHT auf ein Kontaktformular. Frage stattdessen direkt im Chat nach einem Termin (z.B. "Lass uns dazu gerne kurz quatschen. Wann würde es dir für 15 Minuten ans Telefon passen?").
+4. Wenn der Nutzer einen Zeitraum nennt, frage nach der Telefonnummer/E-Mail zur Bestätigung des Termins.
 
-If you don't know an answer, suggest booking a call or sending an email to hallo@manuflux.studio.
-Keep responses concise and easy to read.
+Key Information über manuflux Studio:
+- Leistungen: Premium Websites (Fachkräfte-Magnet), Prozess-Automatisierung, KI-Chatbots, E-Mail-Vortsortierung.
+- Nutzen: Bis zu 80% Zeitersparnis, endlich freie Wochenenden ohne Papierkram.
+- Tonalität: Professionell, auf Augenhöhe, "Handwerker-Sprache" (kein IT-Fachchinesisch). Du schreibst menschlich und pragmatisch.
+- Du bleibst immer in deiner Rolle. Versprich keine fixen Preise im Chat, sondern verweise auf das Erstgespräch.
 `;
 
-export default function Chatbot() {
+export interface QuizData {
+  answers: Record<string, string>;
+  user: { name: string; email: string };
+}
+
+interface ChatbotProps {
+  quizData?: QuizData | null;
+  isOpenProp?: boolean;
+  onCloseSync?: (state: boolean) => void;
+}
+
+export default function Chatbot({ quizData, isOpenProp = false, onCloseSync }: ChatbotProps) {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<{ role: 'user' | 'model'; text: string }[]>([
-    { role: 'model', text: 'Moin! Ich bin der manuflux Assistent. Wie kann ich Ihrem Handwerksbetrieb heute helfen?' }
-  ]);
+  const [messages, setMessages] = useState<{ role: 'user' | 'model'; text: string }[]>([]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+
+  // Sync with external opener (e.g., from Quiz CTA)
+  useEffect(() => {
+    if (isOpenProp) {
+      setIsOpen(true);
+    }
+  }, [isOpenProp]);
+
+  // Handle initialization of messages based on quizData presence
+  useEffect(() => {
+    if (quizData && quizData.user.name) {
+      // Create a heavily personalized greeting context if coming from quiz
+      const branch = quizData.answers['branche'] || 'Handwerk';
+      const pain = quizData.answers['painpoint'] || 'zu viel Büroarbeit';
+      const goal = quizData.answers['goal'] || 'eine Lösung';
+
+      const personalizedGreeting = `Moin ${quizData.user.name}! Ich habe Ihre Auswertung des Digital-Checks vorliegen. 
+Sie sind im Bereich **${branch}** tätig und kämpfen am meisten mit **"${pain}"**. Ihr Ziel: **"${goal}"**.
+      
+Basierend auf diesen echten Handwerker-Problemen habe ich direkt ein paar Ansätze parat. Wollen Sie wissen, wie wir genau dieses Zeit-Problem in der Praxis für Sie lösen können?`;
+
+      setMessages([
+        // Internal prompt structure we inject as 'model' thought or system prompt context is not directly supported by this simple API structure mid-chat, so we just set the chat history context heavily
+        { role: 'model', text: personalizedGreeting }
+      ]);
+    } else if (messages.length === 0) {
+      // Default greeting if no quiz data
+      setMessages([
+        { role: 'model', text: 'Moin! Ich bin der KI-Berater von manuflux. Damit wir nicht um den heißen Brei reden: Aus welchem Gewerk kommen Sie und was stört Sie aktuell am meisten im Büro-Alltag?' }
+      ]);
+    }
+  }, [quizData]);
+
+  // Sync closing state upwards
+  const handleToggle = (state: boolean) => {
+    setIsOpen(state);
+    if (onCloseSync) onCloseSync(state);
+  }
 
   useEffect(() => {
     if (scrollRef.current) {
@@ -123,7 +171,7 @@ export default function Chatbot() {
         )}
       </AnimatePresence>
 
-      <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => setIsOpen(!isOpen)}
+      <motion.button whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }} onClick={() => handleToggle(!isOpen)}
         className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center text-white shadow-lg hover:bg-red-700 transition-colors"
       >
         {isOpen ? <X size={28} /> : <MessageSquare size={28} />}

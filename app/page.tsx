@@ -9,14 +9,25 @@ import Services from '@/components/Services';
 import Portfolio from '@/components/Portfolio';
 import Process from '@/components/Process';
 import FAQ from '@/components/FAQ';
+import WhyChooseUs from '@/components/WhyChooseUs';
 import ContactCTA from '@/components/ContactCTA';
 import Footer from '@/components/Footer';
-import Chatbot from '@/components/Chatbot';
+import Chatbot, { QuizData } from '@/components/Chatbot';
 import Preloader from '@/components/Preloader';
+import QuizModal from '@/components/QuizModal';
 import { useState, useEffect } from 'react';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [isQuizOpen, setIsQuizOpen] = useState(false);
+  const [quizData, setQuizData] = useState<QuizData | null>(null);
+  const [isChatbotOpen, setIsChatbotOpen] = useState(false);
+
+  const handleQuizComplete = (answers: Record<string, string>, user: { name: string, email: string }) => {
+    setIsQuizOpen(false);
+    setQuizData({ answers, user });
+    setIsChatbotOpen(true);
+  };
 
   useEffect(() => {
     // Fallback: Falls Spline nach 3.5 Sekunden nicht geladen hat, Seite trotzdem anzeigen
@@ -29,25 +40,9 @@ export default function Home() {
   return (
     <main className="relative">
       <Preloader isLoading={isLoading} />
-      <Navbar />
-      <Hero onLoaded={() => setIsLoading(false)} />
+      <Navbar onOpenQuiz={() => setIsQuizOpen(true)} />
+      <Hero onLoaded={() => setIsLoading(false)} onOpenQuiz={() => setIsQuizOpen(true)} />
       <Mission />
-
-      {/* Trust Section */}
-      <section className="py-16 border-y border-white/5 bg-black">
-        <div className="max-w-7xl mx-auto px-6">
-          <p className="text-center text-white/20 text-[10px] uppercase tracking-[0.4em] mb-12">
-            Vertraut von führenden Betrieben
-          </p>
-          <div className="flex flex-wrap justify-center items-center gap-12 md:gap-24 opacity-30 grayscale hover:opacity-50 transition-all duration-700">
-            {/* Mock Logos */}
-            <div className="text-xl font-bold font-display tracking-tighter">HOLZBAU MÜLLER</div>
-            <div className="text-xl font-bold font-display tracking-tighter">ELEKTRO SCHULZ</div>
-            <div className="text-xl font-bold font-display tracking-tighter">METALL DESIGN</div>
-            <div className="text-xl font-bold font-display tracking-tighter">DACH PROFI</div>
-          </div>
-        </div>
-      </section>
 
       <Services />
       <Portfolio />
@@ -98,10 +93,10 @@ export default function Home() {
                 className="space-y-6 text-lg text-white/60 leading-relaxed"
               >
                 <p>
-                  manuflux Studio wurde gegründet, um die Lücke zwischen traditionellem Handwerk und moderner Technologie zu schließen. Wir wissen, dass Sie keine Zeit für komplizierte IT-Projekte haben.
+                  manuflux Studio wurde gegründet, um die Lücke zwischen traditionellem Handwerk und moderner Technologie zu schließen. Schluss mit der Zettelwirtschaft am Sonntag und dem ständigen Telefonklingeln auf dem Gerüst. Wir wissen, dass Sie keine Zeit für komplizierte IT-Projekte haben.
                 </p>
                 <p>
-                  Deshalb bieten wir Lösungen, die einfach funktionieren. Wir arbeiten direkt mit Ihnen zusammen – ohne Agentur-Strukturen, dafür mit voller Leidenschaft für das beste Ergebnis.
+                  Deshalb bieten wir Lösungen, die messbar entlasten. Wir arbeiten direkt mit Ihnen zusammen – ohne Agentur-Strukturen, dafür mit voller Leidenschaft für das perfekte Ergebnis.
                 </p>
                 <ul className="space-y-4 pt-4">
                   <li className="flex items-center gap-3 text-white">
@@ -123,10 +118,21 @@ export default function Home() {
         </div>
       </section>
 
+      <WhyChooseUs />
       <FAQ />
-      <ContactCTA />
+      <ContactCTA onOpenQuiz={() => setIsQuizOpen(true)} />
       <Footer />
-      <Chatbot />
+
+      <QuizModal
+        isOpen={isQuizOpen}
+        onClose={() => setIsQuizOpen(false)}
+        onComplete={handleQuizComplete}
+      />
+      <Chatbot
+        quizData={quizData}
+        isOpenProp={isChatbotOpen}
+        onCloseSync={setIsChatbotOpen}
+      />
     </main>
   );
 }

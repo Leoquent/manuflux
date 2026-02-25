@@ -8,11 +8,12 @@ import { SplineScene } from '@/components/ui/spline-scene';
 
 interface HeroProps {
   onLoaded?: () => void;
+  onOpenQuiz?: () => void;
 }
 
-export default function Hero({ onLoaded }: HeroProps) {
+export default function Hero({ onLoaded, onOpenQuiz }: HeroProps) {
   return (
-    <section className="relative min-h-[100dvh] flex items-center justify-center pt-24 pb-20 overflow-hidden">
+    <section className="relative min-h-[100dvh] flex items-center justify-center pt-24 pb-20 overflow-hidden pointer-events-none md:pointer-events-auto">
       {/* Bottom fade out to black */}
       <div className="absolute bottom-0 left-0 right-0 h-40 bg-gradient-to-t from-black to-transparent z-20 pointer-events-none" />
 
@@ -22,7 +23,7 @@ export default function Hero({ onLoaded }: HeroProps) {
         <div className="absolute top-1/4 -left-20 w-[40rem] h-[40rem] bg-[radial-gradient(circle,rgba(220,38,38,0.15)_0%,transparent_60%)] -z-10" />
         <div className="absolute bottom-1/4 -right-20 w-[40rem] h-[40rem] bg-[radial-gradient(circle,rgba(153,27,27,0.1)_0%,transparent_60%)] -z-10" />
         <div
-          className="absolute inset-0 pointer-events-none sm:pointer-events-auto"
+          className="absolute inset-0"
           style={{
             WebkitMaskImage: 'linear-gradient(to bottom, black 0%, transparent 75%)',
             maskImage: 'linear-gradient(to bottom, black 0%, transparent 75%)'
@@ -36,7 +37,7 @@ export default function Hero({ onLoaded }: HeroProps) {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 relative z-10 text-center">
+      <div className="max-w-7xl mx-auto px-6 relative z-10 text-center pointer-events-none">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -47,7 +48,7 @@ export default function Hero({ onLoaded }: HeroProps) {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
             <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
           </span>
-          Digitalisierung für das Handwerk
+          Digitale Entlastung für Handwerksbetriebe
         </motion.div>
 
         <motion.h1
@@ -56,8 +57,8 @@ export default function Hero({ onLoaded }: HeroProps) {
           transition={{ duration: 0.8, delay: 0.2 }}
           className="text-5xl md:text-8xl font-display font-bold tracking-tight mb-8 leading-[0.9]"
         >
-          Webdesign & <br />
-          <span className="text-red-600 italic font-serif">Digitale Lösungen</span>
+          Mehr Zeit fürs <br />
+          <span className="text-red-600 italic font-serif">Handwerk.</span>
         </motion.h1>
 
         <motion.p
@@ -66,20 +67,20 @@ export default function Hero({ onLoaded }: HeroProps) {
           transition={{ duration: 0.8, delay: 0.4 }}
           className="text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-12 leading-relaxed"
         >
-          Wir bauen Websites, die mehr sind als nur eine Visitenkarte. manuflux Studio ist Ihr Partner für Automatisierung, KI-Chatbots und maßgeschneiderte digitale Prozesse im Handwerk.
+          Premium Websites & KI-Automatisierung. Wir bauen digitale Lösungen, die Ihr Büro automatisieren und Sie zum Magneten für Fachkräfte machen. manuflux Studio ist Ihr Partner für messbare Zeitersparnis und reibungslose Abläufe.
         </motion.p>
 
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 pointer-events-auto"
         >
-          <LiquidButton asChild variant="red" size="xl">
-            <Link href="#contact" className="group flex items-center gap-2 font-semibold">
-              Projekt starten
+          <LiquidButton variant="red" size="xl" onClick={onOpenQuiz}>
+            <span className="group flex items-center gap-2 font-semibold cursor-pointer">
+              Digital-Check starten
               <ArrowRight className="group-hover:translate-x-1 transition-transform" />
-            </Link>
+            </span>
           </LiquidButton>
           <LiquidButton asChild size="xl" className="opacity-70 hover:opacity-100 transition-opacity">
             <Link href="#services" className="text-white font-semibold">

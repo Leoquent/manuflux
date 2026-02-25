@@ -4,7 +4,11 @@ import { motion } from 'motion/react';
 import { ArrowRight, Mail, Phone, MapPin } from 'lucide-react';
 import { LiquidButton } from '@/components/ui/liquid-glass-button';
 
-export default function ContactCTA() {
+interface ContactCTAProps {
+  onOpenQuiz?: () => void;
+}
+
+export default function ContactCTA({ onOpenQuiz }: ContactCTAProps) {
   return (
     <section id="contact" className="py-24 bg-black relative overflow-hidden">
       {/* Background Glow */}
@@ -21,9 +25,17 @@ export default function ContactCTA() {
                 Bereit für den <br />
                 <span className="text-red-600 italic font-serif">nächsten Schritt?</span>
               </motion.h2>
-              <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="text-lg text-white/60 mb-12 leading-relaxed">
-                Lassen Sie uns in einem 15-minütigen Gespräch klären, wie wir Ihren Betrieb digital nach vorne bringen können. Unverbindlich und ehrlich.
+              <motion.p initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3 }} className="text-lg text-white/60 mb-8 leading-relaxed">
+                Möchten Sie Zeit sparen? Machen Sie unseren schnellen Digital-Check für eine erste KI-Einschätzung, oder kontaktieren Sie uns klassisch per Formular oder Telefon. Ohne Technik-Sprech.
               </motion.p>
+
+              <div className="mb-12">
+                <LiquidButton variant="red" size="xl" onClick={onOpenQuiz} className="w-full sm:w-auto">
+                  <span className="font-bold px-4 cursor-pointer">
+                    Kostenlosen Digital-Check starten
+                  </span>
+                </LiquidButton>
+              </div>
 
               <div className="space-y-6">
                 <div className="flex items-center gap-4 group cursor-pointer">

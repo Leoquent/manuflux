@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk, Cormorant_Garamond } from 'next/font/google';
 import './globals.css';
 import SmoothScroll from '@/components/SmoothScroll';
 import CustomCursor from '@/components/CustomCursor';
+import { LiquidFilters } from '@/components/ui/liquid-glass-button';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -33,6 +34,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SmoothScroll>
           <CustomCursor />
           {children}
+          <LiquidFilters />
         </SmoothScroll>
       </body>
     </html>

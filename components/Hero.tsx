@@ -82,8 +82,8 @@ export default function Hero({ onLoaded, onOpenQuiz }: HeroProps) {
               <ArrowRight className="group-hover:translate-x-1 transition-transform" />
             </span>
           </LiquidButton>
-          <LiquidButton asChild size="xl" className="opacity-70 hover:opacity-100 transition-opacity">
-            <Link href="#services" className="text-white font-semibold">
+          <LiquidButton asChild variant="outline" size="xl">
+            <Link href="#services" className="font-semibold">
               Unsere Leistungen
             </Link>
           </LiquidButton>

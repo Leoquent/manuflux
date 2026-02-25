@@ -286,7 +286,7 @@ export default function QuizModal({ isOpen, onClose, onComplete }: QuizModalProp
                                             />
 
                                             <div className="pt-4">
-                                                <LiquidButton type="submit" variant="glass-red" size="xl" className="w-full [&_button]:w-full">
+                                                <LiquidButton type="submit" variant="outline-white" size="xl" className="w-full [&_button]:w-full">
                                                     <span className="flex items-center justify-center gap-3 font-bold text-lg py-2">
                                                         Ergebnis im KI-Chat ansehen
                                                         <ArrowRight size={22} className="ml-1" />

@@ -7,7 +7,7 @@ import { ChevronDown } from 'lucide-react';
 const faqs = [
   {
     question: 'Was kostet eine Website bei manuflux Studio?',
-    answer: 'Die Kosten hängen stark vom Umfang und den gewünschten Automatisierungen ab. Ein einfaches, aber hochwertiges Paket startet meist im mittleren vierstelligen Bereich. Wir erstellen Ihnen nach dem Erstgespräch ein individuelles Angebot.',
+    answer: 'Wir arbeiten ausschließlich mit fairen Festpreisen. Warum? Weil wir das klassische System "Geld gegen Zeit" ablehnen. Sie zahlen für das fertige Produkt und Ihre Zeitersparnis, nicht für unsere Arbeitsstunden. Ein hochwertiges Paket startet meist im mittleren vierstelligen Bereich – ohne versteckte Kosten.',
   },
   {
     question: 'Wie lange dauert die Umsetzung?',
@@ -15,7 +15,7 @@ const faqs = [
   },
   {
     question: 'Muss ich mich um das Hosting kümmern?',
-    answer: 'Nein, wir bieten ein Rundum-Sorglos-Paket an. Wir kümmern uns um Hosting, Wartung, Sicherheitsupdates und kleine Anpassungen, damit Sie sich voll auf Ihr Handwerk konzentrieren können.',
+    answer: 'Nein, wir bieten ein Rundum-Sorglos-Paket an. Wir kümmern uns um Hosting, Wartung und Updates – zum monatlichen Fixpreis und ohne Knebelverträge. Sie können flexibel abspringen, denn wir überzeugen durch Leistung, nicht durch lange Laufzeiten.',
   },
   {
     question: 'Können bestehende Systeme angebunden werden?',
@@ -27,7 +27,7 @@ const faqs = [
   },
 ];
 
-export default function FAQ() {
+export default function FAQ({ onOpenChat }: { onOpenChat?: () => void }) {
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
@@ -64,6 +64,18 @@ export default function FAQ() {
             </motion.div>
           ))}
         </div>
+
+        <motion.div
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.5 }}
+          className="mt-12 p-6 bg-white/[0.02] border border-white/5 rounded-full text-center"
+        >
+          <p className="text-white/40 text-sm">
+            Noch Fragen offen? Unser <button onClick={onOpenChat} className="text-red-500 font-semibold italic hover:underline decoration-red-500/30 underline-offset-4 transition-all">KI-Bot</button> steht Ihnen rund um die Uhr zur Verfügung!
+          </p>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { Clock, Banknote, Wrench } from 'lucide-react';
+import { Clock, Banknote, Wrench, ShieldCheck } from 'lucide-react';
 
 const reasons = [
     {
@@ -11,8 +11,13 @@ const reasons = [
     },
     {
         icon: Banknote,
-        title: 'Volle Kostentransparenz',
-        description: 'Keine versteckten IT-Fallen oder unerwarteten Rechnungen. Wir setzen auf klare monatliche Fixpreise.'
+        title: 'Faire Festpreise',
+        description: 'Geld für Ihre Ersparnis, nicht für unsere Zeit. Wir lehnen klassische IT-Stundensätze ab – Sie zahlen für das Produkt und den echten Mehrwert.'
+    },
+    {
+        icon: ShieldCheck,
+        title: 'Keine Knebelverträge',
+        description: 'Maximale Freiheit bei monatlichen Services. Keine Vertragsart oder -dauer ist bei uns länger als 3 Monate.'
     },
     {
         icon: Wrench,
@@ -35,7 +40,7 @@ export default function WhyChooseUs() {
                     </motion.h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                     {reasons.map((reason, index) => (
                         <motion.div
                             key={index}

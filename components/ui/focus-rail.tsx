@@ -172,7 +172,6 @@ export function FocusRail({
                             return (
                                 <motion.div
                                     key={`${absIndex}-${item.id}`}
-                                    data-lenis-prevent={isCenter ? "" : undefined}
                                     className={cn(
                                         "group/tile absolute aspect-[16/10] w-[280px] md:w-[600px] rounded-3xl border border-white/5 bg-zinc-900 shadow-2xl transition-all duration-500 overflow-hidden",
                                         isCenter ? "z-20 ring-1 ring-red-500/20 shadow-red-500/5 cursor-pointer" : "z-10"

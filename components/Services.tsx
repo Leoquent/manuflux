@@ -25,7 +25,7 @@ const services = [
   {
     title: 'Sicheres Hosting & Wartung',
     feature: 'Rundum-Sorglos-Paket & 100% DSGVO-konform.',
-    benefit: 'Keine IT-Kopfschmerzen mehr. Wir kümmern uns im Hintergrund um Server, Sicherheit und Updates zum fairen Festpreis.',
+    benefit: 'Keine IT-Kopfschmerzen mehr. Wir kümmern uns um alles – zum fairen Festpreis und ohne Knebelverträge. Sie zahlen für Ergebnisse, nicht für unsere Arbeitszeit.',
     icon: ShieldCheck,
   },
   {
@@ -106,7 +106,7 @@ export default function Services() {
                 <div key={service.title} className="flex flex-col group">
                   <button
                     onClick={() => setActiveService(index)}
-                    className={`w-full text-left flex items-center justify-between p-3 md:p-3.5 rounded-xl transition-all duration-400 border relative overflow-hidden
+                    className={`w-full text-left flex items-center justify-between p-3 md:p-3.5 rounded-full transition-all duration-400 border relative overflow-hidden
                       ${isActive
                         ? 'bg-white/[0.04] border-white/10 shadow-[0_0_20px_rgba(220,38,38,0.03)]'
                         : 'bg-transparent border-transparent hover:bg-white/[0.02] hover:border-white/5'
